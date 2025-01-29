@@ -1,0 +1,1 @@
+<!-- ini adalah prototype pertama dalam membuat Sistem Informasi Geografis di Kabupaten Hulu Sungai Selatan -->
