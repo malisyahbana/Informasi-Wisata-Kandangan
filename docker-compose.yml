@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ewisata_web
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=rootpassword
+      - DB_NAME=sigkdg
+      - BASE_URL=http://localhost:8080/sigkdg
+    depends_on:
+      - db
+    networks:
+      - sigkdg_net
+
+  db:
+    image: mariadb:10.5
+    container_name: ewisata_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=sigkdg
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./config/sigkdg (4).sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - sigkdg_net
+
+networks:
+  sigkdg_net:
+    driver: bridge
+
+volumes:
+  db_data:
+

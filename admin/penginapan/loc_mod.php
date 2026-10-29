@@ -6,11 +6,10 @@ if (isset($_GET['add_location'])) {
     add_location();
 }
 
-
-
 function get_saved_locations()
 {
-    $con = mysqli_connect("localhost", 'root', '', 'sigkdg');
+    global $connection;
+    $con = $connection;
     if (!$con) {
         die('Not connected : ' . mysqli_connect_error());
     }
@@ -23,10 +22,9 @@ function get_saved_locations()
     }
     $indexed = array_map('array_values', $rows);
 
-    //  $array = array_filter($indexed);
-
     echo json_encode($indexed);
     if (!$rows) {
         return null;
     }
 }
+?>
